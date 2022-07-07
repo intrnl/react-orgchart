@@ -37,7 +37,7 @@ const OrgChart = (props) => {
 		queue.enqueue([null, data]);
 
 		svg.style.width = containerRect.width + 'px';
-    svg.style.height = containerRect.height + 'px';
+		svg.style.height = containerRect.height + 'px';
 
 		while (queue.size) {
 			const [parentId, node] = queue.dequeue();
@@ -47,121 +47,121 @@ const OrgChart = (props) => {
 			const strokeStyle = node[strokeStyleProperty];
 
 			if (children) {
-        for (let idx = 0, len = children.length; idx < len; idx++) {
-          const child = children[idx];
-          queue.enqueue([id, child]);
-        }
-      }
+				for (let idx = 0, len = children.length; idx < len; idx++) {
+					const child = children[idx];
+					queue.enqueue([id, child]);
+				}
+			}
 
 			if (!parentId) {
-        continue;
-      }
+				continue;
+			}
 
-      const parentEl = container.querySelector(`.${styles.container}[data-id="${chartId}${parentId}"]`);
-      const nodeEl = container.querySelector(`.${styles.container}[data-id="${chartId}${id}"]`);
+			const parentEl = container.querySelector(`.${styles.container}[data-id="${chartId}${parentId}"]`);
+			const nodeEl = container.querySelector(`.${styles.container}[data-id="${chartId}${id}"]`);
 
-      const parentRect = parentEl.getBoundingClientRect();
-      const nodeRect = nodeEl.getBoundingClientRect();
+			const parentRect = parentEl.getBoundingClientRect();
+			const nodeRect = nodeEl.getBoundingClientRect();
 
-      const parentX = parentRect.left - containerRect.left;
-      const parentY = parentRect.top - containerRect.top;
+			const parentX = parentRect.left - containerRect.left;
+			const parentY = parentRect.top - containerRect.top;
 
-      const nodeX = nodeRect.left - containerRect.left;
-      const nodeY = nodeRect.top - containerRect.top;
+			const nodeX = nodeRect.left - containerRect.left;
+			const nodeY = nodeRect.top - containerRect.top;
 
-      const d =
-        'M' + (parentX + parentRect.width / 2) +
-        ' ' + (parentY + parentRect.height) +
-        ' V' + (nodeY - 16) +
-        ' H' + (nodeX + nodeRect.width / 2) +
-        ' V' + nodeY;
+			const d =
+				'M' + (parentX + parentRect.width / 2) +
+				' ' + (parentY + parentRect.height) +
+				' V' + (nodeY - 16) +
+				' H' + (nodeX + nodeRect.width / 2) +
+				' V' + nodeY;
 
 			/** @type {SVGPathElement} */
-      let pathEl;
+			let pathEl;
 
-      if (idx < prev) {
-        pathEl = paths[idx];
-      } else {
-        pathEl = document.createElementNS(SVG_NS, 'path');
-        svg.appendChild(pathEl);
-      }
+			if (idx < prev) {
+				pathEl = paths[idx];
+			} else {
+				pathEl = document.createElementNS(SVG_NS, 'path');
+				svg.appendChild(pathEl);
+			}
 
-      pathEl.setAttributeNS(null, 'd', d);
-      pathEl.style.strokeDasharray = strokeStyle === 'dotted' ? '2px' : '';
+			pathEl.setAttributeNS(null, 'd', d);
+			pathEl.style.strokeDasharray = strokeStyle === 'dotted' ? '2px' : '';
 
-      idx++;
+			idx++;
 		}
 
-    for (; idx < prev; idx++) {
-      const excess = paths[idx];
-      excess.remove();
-    }
+		for (; idx < prev; idx++) {
+			const excess = paths[idx];
+			excess.remove();
+		}
 	};
 
 	React.useEffect(() => {
-    refreshLines();
+		refreshLines();
 
-    const callback = () => requestAnimationFrame(refreshLines);
-    window.addEventListener('resize', callback);
-    return () => window.removeEventListener('resize', callback);
-  });
+		const callback = () => requestAnimationFrame(refreshLines);
+		window.addEventListener('resize', callback);
+		return () => window.removeEventListener('resize', callback);
+	});
 
-  const renderNode = (node) => {
-    const children = node[childrenProperty] || [];
+	const renderNode = (node) => {
+		const children = node[childrenProperty] || [];
 
-    const leftAssistants = [];
-    const rightAssistants = [];
-    const divisions = [];
+		const leftAssistants = [];
+		const rightAssistants = [];
+		const divisions = [];
 
-    let assistantIdx = 0;
-    let hasAssistants = false;
-    let hasLeftAssistants = false;
-    let hasRightAssistants = false;
-    let hasDivisions = false;
+		let assistantIdx = 0;
+		let hasAssistants = false;
+		let hasLeftAssistants = false;
+		let hasRightAssistants = false;
+		let hasDivisions = false;
 
-    for (let idx = 0, len = children.length; idx < len; idx++) {
-      const child = children[idx];
+		for (let idx = 0, len = children.length; idx < len; idx++) {
+			const child = children[idx];
 
-      if (child[staffProperty]) {
-        if (assistantIdx % 2 === 0) {
-          leftAssistants.push(child);
-          hasLeftAssistants = true;
-        } else {
-          rightAssistants.push(child);
-          hasRightAssistants = true;
-        }
+			if (child[staffProperty]) {
+				if (assistantIdx % 2 === 0) {
+					leftAssistants.push(child);
+					hasLeftAssistants = true;
+				} else {
+					rightAssistants.push(child);
+					hasRightAssistants = true;
+				}
 
-        assistantIdx += 1;
-        hasAssistants = true;
-      } else {
-        divisions.push(child);
-        hasDivisions = true;
-      }
-    }
+				assistantIdx += 1;
+				hasAssistants = true;
+			} else {
+				divisions.push(child);
+				hasDivisions = true;
+			}
+		}
 
-    return (
-      <div className={styles.group}>
-        <table className={styles.parent}>
-          <tbody>
-            <tr>
-              <td />
-              <td className={styles.node}>
-                <div
-                  className={styles.container}
-                  data-id={`${chartId}${node[idProperty]}`}
-                >
-                  {render(node)}
-                </div>
-              </td>
-              <td />
-            </tr>
+		return (
+			<div className={styles.group}>
+				<table className={styles.parent}>
+					<tbody>
+						<tr>
+							<td />
+							<td className={styles.node}>
+								<div
+									className={styles.container}
+									data-id={`${chartId}${node[idProperty]}`}
+								>
+									{render(node)}
+								</div>
+							</td>
+							<td />
+						</tr>
 
-            {hasAssistants && (
-              <tr>
-                <td>
-                  {hasLeftAssistants && (
-                    <div className={styles.staffLeft}>
-                      <table>
+						{hasAssistants && (
+							<tr>
+								<td>
+									{hasLeftAssistants && (
+										<div className={styles.staffLeft}>
+											<table>
 												<tbody>
 													{leftAssistants.map((child, idx) => (
 														<tr key={idx}>
@@ -169,17 +169,17 @@ const OrgChart = (props) => {
 														</tr>
 													))}
 												</tbody>
-                      </table>
-                    </div>
-                  )}
-                </td>
+											</table>
+										</div>
+									)}
+								</td>
 
-                <td className={styles.gap} />
+								<td className={styles.gap} />
 
-                <td>
-                  {hasRightAssistants && (
-                    <div className={styles.staffRight}>
-                      <table>
+								<td>
+									{hasRightAssistants && (
+										<div className={styles.staffRight}>
+											<table>
 												<tbody>
 													{rightAssistants.map((child, idx) => (
 														<tr key={idx}>
@@ -187,36 +187,36 @@ const OrgChart = (props) => {
 														</tr>
 													))}
 												</tbody>
-                      </table>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-        {hasDivisions && (
-          <table className={styles.children}>
-            <tbody>
-              <tr>
-                {divisions.map((child, idx) => (
-                  <td key={idx}>{renderNode(child)}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        )}
-      </div>
-    );
-  };
+											</table>
+										</div>
+									)}
+								</td>
+							</tr>
+						)}
+					</tbody>
+				</table>
+				{hasDivisions && (
+					<table className={styles.children}>
+						<tbody>
+							<tr>
+								{divisions.map((child, idx) => (
+									<td key={idx}>{renderNode(child)}</td>
+								))}
+							</tr>
+						</tbody>
+					</table>
+				)}
+			</div>
+		);
+	};
 
-  return (
-    <div ref={containerRef} className={styles.orgChart} id={chartId}>
-      {renderNode(data)}
+	return (
+		<div ref={containerRef} className={styles.orgChart} id={chartId}>
+			{renderNode(data)}
 
-      <svg ref={svgRef} className={styles.graph} />
-    </div>
-  );
+			<svg ref={svgRef} className={styles.graph} />
+		</div>
+	);
 };
 
 const MemoizedOrgChart = React.memo(OrgChart);
