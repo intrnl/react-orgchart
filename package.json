@@ -1,7 +1,7 @@
 {
 	"name": "@intrnl/react-orgchart",
 	"description": "Organization chart component for React",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "intrnl",
 	"license": "MIT",
 	"repository": {
