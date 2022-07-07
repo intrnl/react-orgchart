@@ -8,12 +8,11 @@
 		"url": "https://codeberg.org/intrnl/react-orgchart"
 	},
 	"files": [
-		"index.js",
 		"dist/",
 		"types/"
 	],
-	"main": "dist/react-orgchart.js",
-	"module": "dist/react-orgchart.mjs",
+	"main": "dist/react-orgchart.cjs.js",
+	"module": "dist/react-orgchart.es.js",
 	"types": "types/index.d.ts",
 	"style": "dist/style.css",
 	"scripts": {
