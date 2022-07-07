@@ -28,6 +28,7 @@ const OrgChart = (props) => {
 		const svg = svgRef.current;
 
 		const containerRect = container.getBoundingClientRect();
+		const scale = 1 / (containerRect.width / container.offsetWidth);
 
 		const paths = [...svg.childNodes];
 		const prev = paths.length;
@@ -70,11 +71,11 @@ const OrgChart = (props) => {
 			const nodeY = nodeRect.top - containerRect.top;
 
 			const d =
-				'M' + (parentX + parentRect.width / 2) +
-				' ' + (parentY + parentRect.height) +
-				' V' + (nodeY - 16) +
-				' H' + (nodeX + nodeRect.width / 2) +
-				' V' + nodeY;
+				'M' + (parentX + parentRect.width / 2) * scale +
+				' ' + (parentY + parentRect.height) * scale +
+				' V' + (nodeY * scale - 16) +
+				' H' + (nodeX + nodeRect.width / 2) * scale +
+				' V' + nodeY * scale;
 
 			/** @type {SVGPathElement} */
 			let pathEl;
