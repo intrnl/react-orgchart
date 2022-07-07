@@ -1,0 +1,46 @@
+.orgChart {
+	position: relative;
+}
+
+.orgChart table {
+	table-layout: fixed;
+	margin: auto;
+	padding: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.orgChart td {
+	vertical-align: top;
+}
+
+.node {
+	padding: var(--orgchart-node-padding, 30px 10px);
+}
+
+.staffLeft {
+	float: right;
+}
+
+.staffRight {
+	float: left;
+}
+
+.graph {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.graph path {
+	fill: none;
+	stroke: var(--orgchart-stroke-color, #000000);
+	stroke-width: var(--orgchart-stroke-width, 1px);
+}
+
+.group {}
+.parent {}
+.children {}
+.container {}
+.gap {}
