@@ -14,8 +14,11 @@ export default defineConfig((config) => {
 			},
 			sourcemap: true,
 			rollupOptions: {
-				external: ['react'],
+				external: ['react', 'react/jsx-runtime'],
 			},
+		},
+		esbuild: {
+			jsx: 'automatic',
 		},
 		plugins: [
 			config.command !== 'build' && react(),
