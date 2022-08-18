@@ -29,7 +29,7 @@
 				"vite.config.js"
 			],
 			"output": [
-				"dist/_assets"
+				"dist"
 			],
 			"packageLocks": [
 				"pnpm-lock.yaml"
