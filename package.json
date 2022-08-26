@@ -25,11 +25,11 @@
 			"command": "vite build",
 			"clean": "if-file-deleted",
 			"files": [
-				"lib/**/*",
+				"lib/**",
 				"vite.config.js"
 			],
 			"output": [
-				"dist"
+				"dist/**"
 			],
 			"packageLocks": [
 				"pnpm-lock.yaml"
